@@ -1,4 +1,4 @@
-# weather-service
+# Weather-Service
 Weather API
 
 ## Getting Started
@@ -14,15 +14,15 @@ After cloning execute this:
 macbook$ docker build -t api:latest .
 ```
 
-## Running
+### Running
 
-### To run the server use the following command:
+To run the server use the following command:
 
 ```
 macbook$ docker run -it -p 8080:8080 api
 ```
 
-### Then from a different terminal window you can send requests.
+Then from a different terminal window you can send requests.
 
 ## API Documentation
 
@@ -49,3 +49,75 @@ macbook$ docker run -it -p 8080:8080 api
 
     List all existing users
   
+  
+## Examples
+
+Check the server status
+
+```
+$ curl -si http://localhost:8080/ping
+```
+
+```json
+HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 62
+
+{
+    "name": "weatherservice", 
+    "status": "ok", 
+    "version": "1.0.0"
+}
+```
+
+Get forecast for London with specified temperature and pressure units
+
+```
+curl -si -u admin:secret  'http://localhost:8080/forecast/london?temp=F&pres=torr'
+```
+```json
+HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 96
+
+{
+    "clouds": "broken clouds", 
+    "humidity": "61%", 
+    "pressure": "748.5torr", 
+    "temperature": "46.63F"
+}
+```
+
+Creating new user
+
+```
+curl -i -X POST -H "Content-Type: application/json" -d '{"username":"stan","password":"secret"}' 'http://localhost:8080/users/new'
+```
+
+```json
+HTTP/1.0 201 CREATED
+Content-Type: application/json
+Content-Length: 28
+
+{
+    "created username": "stan"
+}
+```
+
+List all existing users
+
+```
+curl -si 'http://localhost:8080/users'
+```
+
+```json
+HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 37
+
+{
+    "user 0": "admin", 
+    "user 1": "stan"
+}
+```
+
