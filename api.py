@@ -84,22 +84,25 @@ def get_ping():
 
 @app.route('/users/new', methods=['POST'])  # creating new user
 def new_user():
-    username = request.json.get('username')
-    password = request.json.get('password')
-    if username is None or password is None:
-        return {
-                   'error': 'user name or password is not provided',
-                   'error_code': 'invalid parameters'
-               }, 400
-    if User.query.filter_by(username=username).first() is not None:
-        return {
-                   'error': 'user name already exist',
-                   'error_code': 'invalid parameters'
-               }, 400
-    user = User(username, password)
-    db.session.add(user)
-    db.session.commit()
-    return {'created username': user.username}, 201
+    try:
+        username = request.json.get('username')
+        password = request.json.get('password')
+        if username is None or password is None:
+            return {
+                       'error': 'user name or password is not provided',
+                       'error_code': 'invalid parameters'
+                   }, 400
+        if User.query.filter_by(username=username).first() is not None:
+            return {
+                       'error': 'user name already exist',
+                       'error_code': 'invalid parameters'
+                   }, 400
+        user = User(username, password)
+        db.session.add(user)
+        db.session.commit()
+        return {'created username': user.username}, 201
+    except:
+        return not_found_error('')
 
 
 @app.route('/users')  # listing all users in database
