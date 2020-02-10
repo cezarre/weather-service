@@ -1,11 +1,15 @@
 # Weather-Service
-Weather API
+Weather API using https://openweathermap.org
 
 ## Getting Started
 
 ### Prerequisites
 To run this service you have to have installed Docker.
 (https://www.docker.com/)
+
+In order to run the service you need a API Key from https://openweathermap.org</br>
+Then put this key to config.py fil as ```API_KEY```</br>
+You can also specify in this config file the host adress and port
 
 ### Installition
 After cloning execute this:
