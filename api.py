@@ -2,6 +2,7 @@
 import os
 import json
 import urllib.request
+import sys
 
 from flask import request, g, abort
 from flask_api import FlaskAPI
@@ -16,6 +17,8 @@ cache = Cache(app)
 
 db = SQLAlchemy(app)
 auth = HTTPBasicAuth()
+
+API_KEY = ''
 
 
 class User(db.Model):
@@ -132,7 +135,8 @@ def get_forecast(city):
                                "error_code": "invalid request"
                            }, 400
 
-    open_weather_map_KEY = app.config['API_KEY']
+    
+    
 
     # Unit requests for temperature || ?temp=C,F,K || Incorrect unit gives error
     temp_symbol = request.args.get('temp', 'C')
@@ -222,5 +226,13 @@ if __name__ == "__main__":
     admin = User('admin', app.config['ADMIN_PASSWORD'])  # For testing purposes
     db.session.add(admin)
     db.session.commit()
-    cache.init_app(app, config={'CACHE_TYPE': 'simple'})
+
+    cache.init_app(app, config={'CACHE_TYPE': 'simple'})  # Initialize cache
+
+    if app.config['API_KEY'] == '':  # Initialize API_KEY
+        print('API_KEY is not defined')
+        sys.exit()
+    else:
+        open_weather_map_KEY = app.config['API_KEY']
+
     app.run(host=app.config['HOST'], port=app.config['PORT'])
