@@ -11,11 +11,11 @@ In order to run the service you need a API Key from https://openweathermap.org</
 Then put this key to config.py fil as ```API_KEY```</br>
 You can also specify in this config file the host adress and port
 
-### Installition
+### Installation
 After cloning execute this:
 
 ```
-macbook$ docker build -t api:latest .
+$ docker build -t api:latest .
 ```
 
 ### Running
@@ -23,7 +23,7 @@ macbook$ docker build -t api:latest .
 To run the server use the following command:
 
 ```
-macbook$ docker run -it -p 8080:8080 api
+$ docker run -it -p 8080:8080 api
 ```
 
 Then from a different terminal window you can send requests.
@@ -77,7 +77,7 @@ Content-Length: 62
 Get forecast for London with specified temperature and pressure units
 
 ```
-curl -si -u admin:secret  'http://localhost:8080/forecast/london?temp=F&pres=torr'
+$ curl -si -u admin:secret  'http://localhost:8080/forecast/london?temp=F&pres=torr'
 ```
 ```json
 HTTP/1.0 200 OK
@@ -95,7 +95,7 @@ Content-Length: 96
 Creating new user
 
 ```
-curl -i -X POST -H "Content-Type: application/json" -d '{"username":"stan","password":"secret"}' 'http://localhost:8080/users/new'
+$ curl -i -X POST -H "Content-Type: application/json" -d '{"username":"stan","password":"secret"}' 'http://localhost:8080/users/new'
 ```
 
 ```json
@@ -111,7 +111,7 @@ Content-Length: 28
 List all existing users
 
 ```
-curl -si 'http://localhost:8080/users'
+$ curl -si 'http://localhost:8080/users'
 ```
 
 ```json
